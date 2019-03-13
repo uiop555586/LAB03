@@ -1,0 +1,153 @@
+
+(1)
+const byte ledPin =12;
+
+void setup()
+{
+  Serial.begin(9600);
+  Serial.print("Hello,World");
+  Serial.print("\tLED pin is:");
+  Serial.print("LedPin");
+  Serial.print("\nBYE!");
+  
+}
+void loop(){
+  byte val;
+  if(Serial.available())
+  {
+    val =Serial.read();
+    if(val=='1')
+    {
+      digitalWrite(ledPin,HIGH);
+      Serial.println("LED ON");
+    }
+    else if(val =='0')
+    {
+      digitalWrite(ledPin,LOW);
+      Serial.println("LED OFF");
+    }
+  }
+}
+(2)
+
+void setup() {
+         Serial.begin(9600);
+         for (int ledPin = 7; ledPin <= 7; ledPin++) {
+           pinMode(ledPin, OUTPUT);
+         }      
+       }
+       void loop() {
+         if (Serial.available() > 0) {  // 檢查是否有資料可供讀取
+           int data = Serial.read();    // 讀取進來的 byte
+           switch (data) {            // 根據收到的字元決定要打開哪顆 LED
+           case '0':   
+             digitalWrite(7, LOW);
+             Serial.print("7 OFF");
+             break;
+           case '1':   
+             digitalWrite(7, HIGH);
+             Serial.print("7 ON");
+             break;
+          
+           default:
+             for (int thisPin = 2; thisPin <= 6; thisPin++) {
+               digitalWrite(thisPin, LOW);      // 關掉所有的 LED
+             }
+           }
+         }
+       }
+
+
+
+(3)
+float Analogin = 0; 
+float k;
+
+void setup(){
+  Serial.begin(9600);
+  pinMode(14,INPUT);
+}
+void loop(){
+ 
+ for (int i=0;i<=5;i++)
+ Analogin = 0.7* Analogin + 0.3* analogRead(14);
+ 
+    k =(Analogin * 2.5) / 4095;
+ 
+ Serial.println(Analogin);
+ Serial.println(k);
+
+ delay(500);
+}
+
+
+
+float sensorValue=0;
+float sensorVoltage;
+float Vin=2.5;
+float R=500000;
+float R1;
+float R2;
+float val;
+
+void setup()
+{
+  Serial.begin(9600);
+  pinMode(15,INPUT);
+}
+void loop(){
+  int i;
+ for (i=0;i<=5;i++)
+  sensorValue = 0.7* sensorValue + 0.3* analogRead(15);
+  sensorVoltage  = sensorValue * 2.5 / 4095;
+  R1 = sensorVoltage * R / Vin;
+  R2=R-R1;
+  sensorVoltage= (Vin * R1) / R;
+  val=analogRead(15);
+  
+ Serial.print("analogRead=");
+ Serial.print(val);
+ Serial.print("\tsensorVoltage=");
+ Serial.print(sensorVoltage );
+ Serial.print("\tR=");
+ Serial.print(R);
+ Serial.print("\tR1=");
+ Serial.print(R1);
+ Serial.print("\tR2=");
+ Serial.println(R2);
+ 
+ delay(500);
+}
+
+
+
+(4)
+float sensorValue=0;
+float sensorVoltage;
+float R=5000000;
+float R1;
+float val;
+
+void setup()
+{
+  Serial.begin(9600);
+  pinMode(15,OUTPUT);
+}
+void loop(){
+  int i;
+ for (i=0;i<=5;i++)
+  sensorValue = 0.7* sensorValue + 0.3* analogRead(15);
+  sensorVoltage  = sensorValue * 2.5 / 4095;
+  R1 = sensorVoltage * R / 2.5;
+  val=analogRead(15);
+  
+ Serial.print("analogRead=");
+ Serial.print(val);
+ Serial.print("\tsensorVoltage=");
+ Serial.print(sensorVoltage );
+ Serial.print("\tR1=");
+ Serial.println(R1);
+ 
+ delay(500);
+}
+
